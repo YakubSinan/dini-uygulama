@@ -1,0 +1,234 @@
+export type Lang = "tr" | "de" | "en";
+export const LANGS: Lang[] = ["tr", "de", "en"];
+
+/** A string available in all three supported languages. */
+export type Localized = Record<Lang, string>;
+
+const dict = {
+  appName: { tr: "Nur", de: "Nur", en: "Nur" },
+  appTagline: {
+    tr: "Günlük ibadet ve Kur'an",
+    de: "Tägliches Gebet und Koran",
+    en: "Daily worship and Quran",
+  },
+
+  // Navigation
+  navHome: { tr: "Ana Sayfa", de: "Start", en: "Home" },
+  navQuran: { tr: "Kur'an", de: "Koran", en: "Quran" },
+  navTracker: { tr: "Takip", de: "Tracker", en: "Tracker" },
+  navCalendar: { tr: "Takvim", de: "Kalender", en: "Calendar" },
+
+  // Generic
+  close: { tr: "Kapat", de: "Schließen", en: "Close" },
+  cancel: { tr: "Vazgeç", de: "Abbrechen", en: "Cancel" },
+  save: { tr: "Kaydet", de: "Speichern", en: "Save" },
+  apply: { tr: "Uygula", de: "Anwenden", en: "Apply" },
+  reset: { tr: "Sıfırla", de: "Zurücksetzen", en: "Reset" },
+  retry: { tr: "Tekrar dene", de: "Erneut versuchen", en: "Try again" },
+  loading: { tr: "Yükleniyor", de: "Wird geladen", en: "Loading" },
+  offline: {
+    tr: "Çevrimdışı – kayıtlı veriler gösteriliyor",
+    de: "Offline – gespeicherte Daten werden angezeigt",
+    en: "Offline – showing saved data",
+  },
+  loadError: {
+    tr: "Veriler yüklenemedi. İnternet bağlantınızı kontrol edin.",
+    de: "Daten konnten nicht geladen werden. Bitte Internetverbindung prüfen.",
+    en: "Could not load data. Please check your connection.",
+  },
+  settings: { tr: "Ayarlar", de: "Einstellungen", en: "Settings" },
+  theme: { tr: "Tema", de: "Design", en: "Theme" },
+  themeLight: { tr: "Açık", de: "Hell", en: "Light" },
+  themeDark: { tr: "Koyu", de: "Dunkel", en: "Dark" },
+  themeSystem: { tr: "Sistem", de: "System", en: "System" },
+  days: { tr: "gün", de: "Tage", en: "days" },
+  day: { tr: "gün", de: "Tag", en: "day" },
+  today: { tr: "Bugün", de: "Heute", en: "Today" },
+  tomorrow: { tr: "Yarın", de: "Morgen", en: "Tomorrow" },
+  daysLeft: { tr: "gün kaldı", de: "Tage verbleibend", en: "days left" },
+  dayLeft: { tr: "gün kaldı", de: "Tag verbleibend", en: "day left" },
+  isToday: { tr: "Bugün", de: "Heute", en: "Today" },
+  passed: { tr: "Geçti", de: "Vorbei", en: "Passed" },
+
+  // Home
+  greeting: { tr: "Selâmün aleyküm", de: "As-salamu alaikum", en: "As-salamu alaikum" },
+  dailyHadith: { tr: "Günün Hadisi", de: "Hadith des Tages", en: "Hadith of the Day" },
+  readMore: { tr: "Devamını Oku", de: "Weiterlesen", en: "Read More" },
+  anotherHadith: { tr: "Başka hadis", de: "Anderer Hadith", en: "Another hadith" },
+  commentary: { tr: "Şerh", de: "Erläuterung", en: "Commentary" },
+  takeaway: { tr: "Günlük hayata yansıması", de: "Für den Alltag", en: "Practical takeaway" },
+  source: { tr: "Kaynak", de: "Quelle", en: "Source" },
+  prayerTimes: { tr: "Namaz Vakitleri", de: "Gebetszeiten", en: "Prayer Times" },
+  nextPrayer: { tr: "Sonraki vakit", de: "Nächstes Gebet", en: "Next prayer" },
+  timeLeft: { tr: "kaldı", de: "verbleibend", en: "remaining" },
+  currentPrayer: { tr: "Şu anki vakit", de: "Aktuelles Gebet", en: "Current" },
+  fajr: { tr: "İmsak", de: "Fadschr", en: "Fajr" },
+  sunrise: { tr: "Güneş", de: "Sonnenaufgang", en: "Sunrise" },
+  dhuhr: { tr: "Öğle", de: "Dhuhr", en: "Dhuhr" },
+  asr: { tr: "İkindi", de: "Asr", en: "Asr" },
+  maghrib: { tr: "Akşam", de: "Maghrib", en: "Maghrib" },
+  isha: { tr: "Yatsı", de: "Ischa", en: "Isha" },
+  location: { tr: "Konum", de: "Standort", en: "Location" },
+  changeLocation: { tr: "Konumu değiştir", de: "Standort ändern", en: "Change location" },
+  useMyLocation: { tr: "Konumumu kullan", de: "Meinen Standort verwenden", en: "Use my location" },
+  locating: { tr: "Konum alınıyor", de: "Standort wird ermittelt", en: "Locating" },
+  currentLocation: { tr: "Mevcut konum", de: "Aktueller Standort", en: "Current location" },
+  geoDenied: {
+    tr: "Konum izni verilmedi. Lütfen şehrinizi elle girin.",
+    de: "Standortzugriff verweigert. Bitte Stadt manuell eingeben.",
+    en: "Location access denied. Please enter your city manually.",
+  },
+  orSearchCity: { tr: "veya şehir girin", de: "oder Stadt eingeben", en: "or enter a city" },
+  city: { tr: "Şehir", de: "Stadt", en: "City" },
+  country: { tr: "Ülke", de: "Land", en: "Country" },
+  calcMethod: { tr: "Hesaplama yöntemi", de: "Berechnungsmethode", en: "Calculation method" },
+  upcomingEvent: { tr: "Yaklaşan Mübarek Gün", de: "Nächster besonderer Tag", en: "Upcoming Holy Day" },
+  viewCalendar: { tr: "Takvimi aç", de: "Kalender öffnen", en: "Open calendar" },
+  continueReading: { tr: "Okumaya devam et", de: "Weiterlesen", en: "Continue reading" },
+
+  // Quran
+  quranTitle: { tr: "Kur'an-ı Kerim", de: "Der edle Koran", en: "The Noble Quran" },
+  searchSurah: {
+    tr: "Sure adı, numara veya sayfa ara",
+    de: "Sure, Nummer oder Seite suchen",
+    en: "Search surah, number or page",
+  },
+  surahs: { tr: "Sureler", de: "Suren", en: "Surahs" },
+  juz: { tr: "Cüz", de: "Dschuz", en: "Juz" },
+  page: { tr: "Sayfa", de: "Seite", en: "Page" },
+  goToPage: { tr: "Sayfaya git", de: "Zur Seite", en: "Go to page" },
+  pageNumber: { tr: "Sayfa numarası (1–604)", de: "Seitenzahl (1–604)", en: "Page number (1–604)" },
+  ayahs: { tr: "ayet", de: "Verse", en: "ayahs" },
+  meccan: { tr: "Mekkî", de: "mekkanisch", en: "Meccan" },
+  medinan: { tr: "Medenî", de: "medinensisch", en: "Medinan" },
+  lastRead: { tr: "Kaldığım Yer", de: "Zuletzt gelesen", en: "Last Read" },
+  noBookmark: {
+    tr: "Henüz yer imi yok. Fatiha suresi ile başlayın.",
+    de: "Noch kein Lesezeichen. Beginnen Sie mit Al-Fatiha.",
+    en: "No bookmark yet. Start with Al-Fatihah.",
+  },
+  startReading: { tr: "Okumaya başla", de: "Lesen beginnen", en: "Start reading" },
+  resume: { tr: "Devam et", de: "Fortsetzen", en: "Resume" },
+  bookmark: { tr: "Yer imi", de: "Lesezeichen", en: "Bookmark" },
+  bookmarkSaved: { tr: "Kaldığınız yer kaydedildi", de: "Lesezeichen gespeichert", en: "Bookmark saved" },
+  ayah: { tr: "Ayet", de: "Vers", en: "Ayah" },
+  noResults: { tr: "Sonuç bulunamadı", de: "Keine Ergebnisse", en: "No results" },
+  readerSettings: { tr: "Okuma ayarları", de: "Leseeinstellungen", en: "Reading settings" },
+  arabicSize: { tr: "Arapça yazı boyutu", de: "Arabische Schriftgröße", en: "Arabic font size" },
+  transliteration: { tr: "Okunuş (Latin harfleri)", de: "Umschrift (Transliteration)", en: "Transliteration" },
+  translations: { tr: "Mealler", de: "Übersetzungen", en: "Translations" },
+  reciter: { tr: "Kâri (Mekke İmamı)", de: "Rezitator (Imam von Mekka)", en: "Reciter (Imam of Makkah)" },
+  play: { tr: "Oynat", de: "Abspielen", en: "Play" },
+  pause: { tr: "Duraklat", de: "Pause", en: "Pause" },
+  previous: { tr: "Önceki", de: "Vorherige", en: "Previous" },
+  next: { tr: "Sonraki", de: "Nächste", en: "Next" },
+  playSurah: { tr: "Sureyi dinle", de: "Sure anhören", en: "Listen to surah" },
+  playPage: { tr: "Sayfayı dinle", de: "Seite anhören", en: "Listen to page" },
+  audioError: {
+    tr: "Ses yüklenemedi. Bağlantınızı kontrol edin.",
+    de: "Audio konnte nicht geladen werden.",
+    en: "Audio could not be loaded.",
+  },
+  back: { tr: "Geri", de: "Zurück", en: "Back" },
+  autoScroll: { tr: "Okunan ayete kaydır", de: "Automatisch scrollen", en: "Auto-scroll to ayah" },
+
+  // Tracker
+  trackerTitle: { tr: "İbadet Takibi", de: "Gebets-Tracker", en: "Worship Tracker" },
+  kazaTitle: { tr: "Kaza Namazları", de: "Nachzuholende Gebete", en: "Missed Prayers (Qada)" },
+  memorizeTitle: { tr: "Ezberlenen Sureler", de: "Auswendig gelernte Suren", en: "Memorized Surahs" },
+  remaining: { tr: "Kalan", de: "Offen", en: "Remaining" },
+  completed: { tr: "Kılınan", de: "Nachgeholt", en: "Completed" },
+  total: { tr: "Toplam", de: "Gesamt", en: "Total" },
+  witr: { tr: "Vitir", de: "Witr", en: "Witr" },
+  fajrPrayer: { tr: "Sabah", de: "Fadschr", en: "Fajr" },
+  addMissed: { tr: "Kaza ekle", de: "Fehlendes hinzufügen", en: "Add missed" },
+  markPrayed: { tr: "Kıldım", de: "Nachgeholt", en: "Prayed" },
+  bulkAdd: { tr: "Toplu ekle", de: "Mehrere hinzufügen", en: "Bulk add" },
+  addOneYear: { tr: "+1 Yıl", de: "+1 Jahr", en: "+1 Year" },
+  addOneMonth: { tr: "+1 Ay", de: "+1 Monat", en: "+1 Month" },
+  customAmount: { tr: "Özel miktar", de: "Eigene Anzahl", en: "Custom amount" },
+  unitDays: { tr: "Gün", de: "Tage", en: "Days" },
+  unitMonths: { tr: "Ay", de: "Monate", en: "Months" },
+  unitYears: { tr: "Yıl", de: "Jahre", en: "Years" },
+  allPrayers: { tr: "Tüm vakitler", de: "Alle Gebete", en: "All prayers" },
+  applyTo: { tr: "Uygulanacak vakit", de: "Anwenden auf", en: "Apply to" },
+  bulkHint: {
+    tr: "Bir yıl 365 gün olarak hesaplanır; her gün için seçilen vakte birer kaza eklenir.",
+    de: "Ein Jahr wird mit 365 Tagen berechnet; pro Tag wird je ein Gebet hinzugefügt.",
+    en: "One year counts as 365 days; one prayer is added per day for the selected prayers.",
+  },
+  resetConfirm: {
+    tr: "Tüm kaza kayıtları silinsin mi?",
+    de: "Alle Einträge zurücksetzen?",
+    en: "Reset all missed prayer records?",
+  },
+  kazaEmpty: {
+    tr: "Kaza borcunuzu ekleyerek başlayın. Her kıldığınız namazı işaretleyin.",
+    de: "Fügen Sie Ihre offenen Gebete hinzu und markieren Sie jedes nachgeholte Gebet.",
+    en: "Add your missed prayers, then mark each one as you make it up.",
+  },
+  progress: { tr: "İlerleme", de: "Fortschritt", en: "Progress" },
+  all: { tr: "Tümü", de: "Alle", en: "All" },
+  shortSurahs: { tr: "Namaz Sureleri", de: "Kurze Suren", en: "Short Surahs" },
+  memorized: { tr: "Ezberlendi", de: "Gelernt", en: "Memorized" },
+  notMemorized: { tr: "Ezberlenmedi", de: "Offen", en: "Not yet" },
+  ayahsMemorized: { tr: "ezberlenen ayet", de: "Verse gelernt", en: "ayahs memorized" },
+  surahsMemorized: { tr: "sure", de: "Suren", en: "surahs" },
+  filterSurahs: { tr: "Sure ara", de: "Sure suchen", en: "Filter surahs" },
+  edit: { tr: "Düzenle", de: "Bearbeiten", en: "Edit" },
+  setRemaining: { tr: "Kalan sayıyı ayarla", de: "Offene Anzahl festlegen", en: "Set remaining count" },
+
+  // Calendar
+  calendarTitle: { tr: "Hicri Takvim", de: "Islamischer Kalender", en: "Islamic Calendar" },
+  holyDaysThisMonth: { tr: "Bu aydaki mübarek günler", de: "Besondere Tage in diesem Monat", en: "Holy days this month" },
+  noEventsMonth: {
+    tr: "Bu ay özel bir gün bulunmuyor.",
+    de: "Keine besonderen Tage in diesem Monat.",
+    en: "No special days this month.",
+  },
+  upcoming: { tr: "Yaklaşanlar", de: "Demnächst", en: "Upcoming" },
+  meaning: { tr: "Anlamı", de: "Bedeutung", en: "Meaning" },
+  history: { tr: "Tarihçe", de: "Geschichte", en: "History" },
+  worship: { tr: "Tavsiye edilen ibadetler ve dualar", de: "Empfohlene Gebete und Bittgebete", en: "Recommended worship and duas" },
+  hijriAdjust: { tr: "Hicri tarih düzeltmesi", de: "Hidschri-Korrektur", en: "Hijri date adjustment" },
+  hijriAdjustHint: {
+    tr: "Hilal gözlemine göre takvim bir gün kayabilir.",
+    de: "Je nach Mondsichtung kann der Kalender um einen Tag abweichen.",
+    en: "Depending on moon sighting, dates may shift by a day.",
+  },
+  eveningNote: {
+    tr: "Kandil gecesi bu günün akşamı başlar.",
+    de: "Die gesegnete Nacht beginnt am Abend dieses Tages.",
+    en: "The blessed night begins on the evening of this day.",
+  },
+  installHint: {
+    tr: "Uygulamayı ana ekrana ekleyerek çevrimdışı kullanabilirsiniz.",
+    de: "Zum Startbildschirm hinzufügen, um die App offline zu nutzen.",
+    en: "Add to your home screen to use the app offline.",
+  },
+} satisfies Record<string, Localized>;
+
+export type DictKey = keyof typeof dict;
+
+export function translate(lang: Lang, key: DictKey): string {
+  return dict[key][lang];
+}
+
+export const LOCALE: Record<Lang, string> = { tr: "tr-TR", de: "de-DE", en: "en-GB" };
+
+export const HIJRI_MONTHS: Localized[] = [
+  { tr: "Muharrem", de: "Muharram", en: "Muharram" },
+  { tr: "Safer", de: "Safar", en: "Safar" },
+  { tr: "Rebiülevvel", de: "Rabi al-Awwal", en: "Rabi al-Awwal" },
+  { tr: "Rebiülahir", de: "Rabi ath-Thani", en: "Rabi al-Thani" },
+  { tr: "Cemaziyelevvel", de: "Dschumada al-Ula", en: "Jumada al-Ula" },
+  { tr: "Cemaziyelahir", de: "Dschumada al-Akhira", en: "Jumada al-Akhirah" },
+  { tr: "Recep", de: "Radschab", en: "Rajab" },
+  { tr: "Şaban", de: "Schaban", en: "Shaban" },
+  { tr: "Ramazan", de: "Ramadan", en: "Ramadan" },
+  { tr: "Şevval", de: "Schawwal", en: "Shawwal" },
+  { tr: "Zilkade", de: "Dhu al-Qada", en: "Dhu al-Qadah" },
+  { tr: "Zilhicce", de: "Dhu al-Hiddscha", en: "Dhu al-Hijjah" },
+];
+
+export const HIJRI_SUFFIX: Localized = { tr: "H", de: "n. H.", en: "AH" };

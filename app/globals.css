@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface-2: #f3efe8;
+  --fg: #1d2622;
+  --muted: #6b726d;
+  --line: #e8e2d8;
+  --gold: #c59b27;
+  --gold-soft: rgba(197, 155, 39, 0.12);
+  --emerald: #1f5e4c;
+  --emerald-soft: rgba(31, 94, 76, 0.09);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0f171a;
+  --surface: #152125;
+  --surface-2: #1b2a2f;
+  --fg: #ece7dd;
+  --muted: #8f9a96;
+  --line: #24363b;
+  --gold: #d4ad45;
+  --gold-soft: rgba(212, 173, 69, 0.14);
+  --emerald: #5fb39a;
+  --emerald-soft: rgba(95, 179, 154, 0.12);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-emerald: var(--emerald);
+  --color-emerald-soft: var(--emerald-soft);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: var(--font-amiri), "Scheherazade New", "Traditional Arabic", serif;
+  --font-serif: var(--font-amiri), Georgia, serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.arabic {
+  font-family: var(--font-arabic);
+  direction: rtl;
+  line-height: 2.1;
+  font-feature-settings: "calt", "liga";
+}
+
+/* Subtle geometric eight-point star pattern used on hero cards. */
+.pattern-star {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23C59B27' stroke-opacity='0.18' stroke-width='0.8'%3E%3Crect x='14' y='14' width='20' height='20'/%3E%3Crect x='14' y='14' width='20' height='20' transform='rotate(45 24 24)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-sheet {
+  animation: sheet-up 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.animate-fade {
+  animation: fade-in 0.2s ease-out;
+}
+
+input[type="range"] {
+  accent-color: var(--gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-sheet,
+  .animate-fade {
+    animation: none;
+  }
+}

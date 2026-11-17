@@ -63,6 +63,38 @@ export function useShowTranslit() {
   return useStored<boolean>("showTranslit", true);
 }
 
+export function useShowArabic() {
+  return useStored<boolean>("showArabic", true);
+}
+
+export function useShowTranslation() {
+  return useStored<boolean>("showTranslation", true);
+}
+
+export type ViewLayer = "arabic" | "translit" | "translation";
+export const VIEW_LAYERS: ViewLayer[] = ["arabic", "translit", "translation"];
+
+/** Which text layers the Quran reader shows. At least one layer always stays visible. */
+export function useViewLayers() {
+  const [arabic, setArabic] = useShowArabic();
+  const [translit, setTranslit] = useShowTranslit();
+  const [translation, setTranslation] = useShowTranslation();
+  const layers: Record<ViewLayer, boolean> = { arabic, translit, translation };
+  const setters: Record<ViewLayer, (v: boolean) => void> = {
+    arabic: setArabic,
+    translit: setTranslit,
+    translation: setTranslation,
+  };
+  const toggle = (layer: ViewLayer) => {
+    const active = VIEW_LAYERS.filter((l) => layers[l]);
+    if (layers[layer] && active.length === 1) return; // never hide everything
+    setters[layer](!layers[layer]);
+  };
+  const only = (layer: ViewLayer) => VIEW_LAYERS.forEach((l) => setters[l](l === layer));
+  const all = () => VIEW_LAYERS.forEach((l) => setters[l](true));
+  return { layers, toggle, only, all };
+}
+
 /** Selected translation editions. Empty array means "follow UI language". */
 export function useTranslations() {
   return useStored<string[]>("translations", []);

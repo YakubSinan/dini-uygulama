@@ -18,7 +18,7 @@ export function Header() {
     <header className="pt-safe sticky top-0 z-30 border-b border-line/60 bg-bg/85 backdrop-blur-xl">
       <div className="flex h-14 items-center justify-between px-4">
         <div className="flex items-center gap-2.5">
-          <AppMark className="h-7 w-7" />
+          <AppMark className="h-9 w-9" />
           <span className="font-serif text-xl font-bold tracking-wide text-fg">{t("appName")}</span>
         </div>
         <div className="flex items-center gap-1">

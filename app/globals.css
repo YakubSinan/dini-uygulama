@@ -42,7 +42,7 @@
   --color-emerald: var(--emerald);
   --color-emerald-soft: var(--emerald-soft);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: var(--font-amiri), "Scheherazade New", "Traditional Arabic", serif;
+  --font-arabic: var(--font-hafs), var(--font-amiri), "Scheherazade New", "Traditional Arabic", serif;
   --font-serif: var(--font-amiri), Georgia, serif;
 }
 
@@ -63,8 +63,27 @@ body {
 .arabic {
   font-family: var(--font-arabic);
   direction: rtl;
-  line-height: 2.1;
+  line-height: 2.2;
   font-feature-settings: "calt", "liga";
+  word-spacing: 0.04em;
+}
+
+/* Mushaf page: continuous justified text, ayahs flow into each other like a printed page. */
+.mushaf-text {
+  text-align: justify;
+  text-align-last: center;
+  text-justify: inter-word;
+  line-height: 2.35;
+}
+.mushaf-ayah {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding: 0.1em 0;
+}
+.mushaf-marker {
+  display: inline-block;
+  font-size: 0.95em;
+  white-space: nowrap;
 }
 
 /* Subtle geometric eight-point star pattern used on hero cards. */

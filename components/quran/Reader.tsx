@@ -10,15 +10,17 @@ import {
   useArabicSize,
   useBookmark,
   useReciter,
-  useShowTranslit,
   useT,
   useTranslations,
+  useViewLayers,
 } from "@/lib/settings";
 import { AyahItem } from "./AyahItem";
 import { AudioPlayer } from "./AudioPlayer";
 import { ReaderSettings } from "./ReaderSettings";
 import { SurahHeader } from "./SurahHeader";
 import { useAyahAudio } from "./useAyahAudio";
+import { ViewFilter } from "./ViewFilter";
+import { MushafView } from "./MushafView";
 
 function parseTarget(params: URLSearchParams): QuranTarget {
   const p = Number(params.get("p"));
@@ -34,7 +36,12 @@ export function Reader() {
   const scrollToAyah = Number(params.get("a")) || 0;
   const targetKey = target.kind === "surah" ? `s${target.surah}` : `p${target.page}`;
 
-  const [showTranslit] = useShowTranslit();
+  const { layers } = useViewLayers();
+  const showTranslit = layers.translit;
+  // Arabic only: lay the text out as a continuous mushaf page instead of one card per ayah.
+  const mushaf = layers.arabic && !layers.translit && !layers.translation;
+  const [selected, setSelected] = useState<number | null>(null);
+  useEffect(() => setSelected(null), [targetKey, mushaf]);
   const [storedTranslations] = useTranslations();
   const [arabicSize] = useArabicSize();
   const [reciter] = useReciter();
@@ -44,7 +51,12 @@ export function Reader() {
     () => (storedTranslations.length ? storedTranslations : [defaultTranslation(lang)]),
     [storedTranslations, lang],
   );
-  const optionsKey = `${showTranslit}|${translations.join(",")}`;
+  // Only fetch what is shown; hidden layers cost no network.
+  const visibleTranslations = useMemo(
+    () => (layers.translation ? translations : []),
+    [layers.translation, translations],
+  );
+  const optionsKey = `${showTranslit}|${visibleTranslations.join(",")}`;
 
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
@@ -165,6 +177,7 @@ export function Reader() {
         ) : (
           <span className="h-9 w-9" />
         )}
+        <ViewFilter className={navBtn} />
         <button onClick={() => setSettingsOpen(true)} className={navBtn} aria-label={t("readerSettings")}>
           <SlidersHorizontal size={18} strokeWidth={1.75} />
         </button>
@@ -192,25 +205,42 @@ export function Reader() {
               </p>
             )}
             {target.kind === "surah" && surah && <SurahHeader surah={surah} />}
-            <div>
-              {ayahs.map((a, i) => (
-                <div key={a.number}>
-                  {target.kind === "page" && a.numberInSurah === 1 && getSurah(a.surah) && (
-                    <SurahHeader surah={getSurah(a.surah)!} compact />
-                  )}
-                  <AyahItem
-                    ayah={a}
-                    arabicSize={arabicSize}
-                    translations={translations}
-                    active={audio.index === i}
-                    playing={audio.index === i && audio.playing}
-                    bookmarked={bookmark?.surah === a.surah && bookmark?.ayah === a.numberInSurah}
-                    onPlay={() => (audio.index === i ? audio.toggle() : audio.playAt(i))}
-                    onBookmark={() => saveBookmark(a)}
-                  />
-                </div>
-              ))}
-            </div>
+            {mushaf ? (
+              <MushafView
+                ayahs={ayahs}
+                arabicSize={arabicSize}
+                inlineHeaders={target.kind === "page"}
+                activeIndex={audio.index}
+                playing={audio.playing}
+                selected={selected}
+                onSelect={setSelected}
+                bookmark={bookmark}
+                onPlay={(i) => (audio.index === i ? audio.toggle() : audio.playAt(i))}
+                onBookmark={saveBookmark}
+              />
+            ) : (
+              <div>
+                {ayahs.map((a, i) => (
+                  <div key={a.number}>
+                    {target.kind === "page" && a.numberInSurah === 1 && getSurah(a.surah) && (
+                      <SurahHeader surah={getSurah(a.surah)!} compact />
+                    )}
+                    <AyahItem
+                      ayah={a}
+                      arabicSize={arabicSize}
+                      showArabic={layers.arabic}
+                      showTranslit={showTranslit}
+                      translations={visibleTranslations}
+                      active={audio.index === i}
+                      playing={audio.index === i && audio.playing}
+                      bookmarked={bookmark?.surah === a.surah && bookmark?.ayah === a.numberInSurah}
+                      onPlay={() => (audio.index === i ? audio.toggle() : audio.playAt(i))}
+                      onBookmark={() => saveBookmark(a)}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="flex justify-between gap-3 py-8">
               {prevHref ? (
                 <Link href={prevHref} className="flex items-center gap-1 rounded-full border border-line px-4 py-2 text-sm">

@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AppShell } from "@/components/layout/AppShell";
 
 const inter = Inter({ subsets: ["latin", "latin-ext"], variable: "--font-inter", display: "swap" });
 const amiri = Amiri({ subsets: ["arabic", "latin"], weight: ["400", "700"], variable: "--font-amiri", display: "swap" });
+// KFGQPC Uthmanic Script HAFS: the Madani mushaf typeface of the King Fahd Quran Printing Complex.
+const hafs = localFont({
+  src: "./fonts/UthmanicHafs1Ver18.woff2",
+  variable: "--font-hafs",
+  display: "swap",
+  fallback: ["Scheherazade New", "Traditional Arabic", "serif"],
+});
 
 export const metadata: Metadata = {
-  title: "Nur – Daily Worship and Quran",
+  title: "Rıhlemedar – Daily Worship and Quran",
   description: "Prayer times, daily hadith, Quran reader with Makkah imams, missed prayer tracker and Islamic calendar.",
-  applicationName: "Nur",
+  applicationName: "Rıhlemedar",
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Nur" },
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Rıhlemedar" },
   formatDetection: { telephone: false },
   icons: {
     icon: [
@@ -37,7 +45,7 @@ const bootScript = `(function(){try{var t=JSON.parse(localStorage.getItem('nur:t
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" suppressHydrationWarning className={`${inter.variable} ${amiri.variable}`}>
+    <html lang="tr" suppressHydrationWarning className={`${inter.variable} ${amiri.variable} ${hafs.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>

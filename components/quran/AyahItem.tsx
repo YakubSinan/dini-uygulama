@@ -8,6 +8,8 @@ import { useT } from "@/lib/settings";
 interface Props {
   ayah: Ayah;
   arabicSize: number;
+  showArabic: boolean;
+  showTranslit: boolean;
   translations: string[];
   active: boolean;
   playing: boolean;
@@ -24,6 +26,8 @@ function cleanTranslit(s: string) {
 export const AyahItem = memo(function AyahItem({
   ayah,
   arabicSize,
+  showArabic,
+  showTranslit,
   translations,
   active,
   playing,
@@ -67,25 +71,27 @@ export const AyahItem = memo(function AyahItem({
         </div>
       </div>
 
-      <p className="arabic text-right text-fg" style={{ fontSize: `${arabicSize}px` }} lang="ar">
-        {ayah.arabic}
-        <span className="mx-1 inline-block text-gold" style={{ fontSize: "0.8em" }}>
-          {"﴿"}
-          {toArabicDigits(ayah.numberInSurah)}
-          {"﴾"}
-        </span>
-      </p>
-
-      {ayah.translit && (
-        <p className="mt-3 text-[15px] italic leading-relaxed text-emerald">{cleanTranslit(ayah.translit)}</p>
+      {showArabic && (
+        <p className="arabic text-right text-fg" style={{ fontSize: `${arabicSize}px` }} lang="ar">
+          {ayah.arabic}
+          <span className="mx-1 inline-block text-gold" style={{ fontSize: "0.95em" }}>
+            {toArabicDigits(ayah.numberInSurah)}
+          </span>
+        </p>
       )}
 
-      {translations.map((ed) => {
+      {showTranslit && ayah.translit && (
+        <p className={`text-[15px] italic leading-relaxed text-fg ${showArabic ? "mt-3" : ""}`}>
+          {cleanTranslit(ayah.translit)}
+        </p>
+      )}
+
+      {translations.map((ed, i) => {
         const text = ayah.translations[ed];
         if (!text) return null;
         const meta = TRANSLATION_EDITIONS.find((e) => e.id === ed);
         return (
-          <div key={ed} className="mt-3">
+          <div key={ed} className={i > 0 || showArabic || (showTranslit && ayah.translit) ? "mt-3" : ""}>
             {multiple && meta && (
               <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
                 {meta.lang.toUpperCase()}

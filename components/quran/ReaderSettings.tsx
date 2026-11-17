@@ -3,13 +3,13 @@
 import { Check } from "lucide-react";
 import { BottomSheet } from "@/components/ui/BottomSheet";
 import { TRANSLATION_EDITIONS, defaultTranslation } from "@/lib/quran";
-import { useArabicSize, useShowTranslit, useT, useTranslations } from "@/lib/settings";
+import { useArabicSize, useT, useTranslations } from "@/lib/settings";
 import { ReciterList } from "./AudioPlayer";
+import { ViewLayerOptions } from "./ViewFilter";
 
 export function ReaderSettings({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, lang } = useT();
   const [size, setSize] = useArabicSize();
-  const [translit, setTranslit] = useShowTranslit();
   const [stored, setStored] = useTranslations();
   const selected = stored.length ? stored : [defaultTranslation(lang)];
 
@@ -49,21 +49,8 @@ export function ReaderSettings({ open, onClose }: { open: boolean; onClose: () =
       </section>
 
       <section className="mt-6">
-        <button
-          onClick={() => setTranslit(!translit)}
-          className="flex w-full items-center justify-between rounded-2xl border border-line px-4 py-3"
-          role="switch"
-          aria-checked={translit}
-        >
-          <span className="font-medium">{t("transliteration")}</span>
-          <span className={`relative h-6 w-11 rounded-full transition-colors ${translit ? "bg-emerald" : "bg-line"}`}>
-            <span
-              className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all ${
-                translit ? "left-[22px]" : "left-0.5"
-              }`}
-            />
-          </span>
-        </button>
+        <div className={heading}>{t("viewFilter")}</div>
+        <ViewLayerOptions />
       </section>
 
       <section className="mt-6">

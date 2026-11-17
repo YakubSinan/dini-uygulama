@@ -5,7 +5,7 @@ export const LANGS: Lang[] = ["tr", "de", "en"];
 export type Localized = Record<Lang, string>;
 
 const dict = {
-  appName: { tr: "Nur", de: "Nur", en: "Nur" },
+  appName: { tr: "Rıhlemedar", de: "Rıhlemedar", en: "Rıhlemedar" },
   appTagline: {
     tr: "Günlük ibadet ve Kur'an",
     de: "Tägliches Gebet und Koran",
@@ -17,6 +17,7 @@ const dict = {
   navQuran: { tr: "Kur'an", de: "Koran", en: "Quran" },
   navTracker: { tr: "Takip", de: "Tracker", en: "Tracker" },
   navCalendar: { tr: "Takvim", de: "Kalender", en: "Calendar" },
+  navQibla: { tr: "Kıble", de: "Kibla", en: "Qibla" },
 
   // Generic
   close: { tr: "Kapat", de: "Schließen", en: "Close" },
@@ -130,6 +131,48 @@ const dict = {
     en: "Audio could not be loaded.",
   },
   back: { tr: "Geri", de: "Zurück", en: "Back" },
+  viewFilter: { tr: "Görünüm", de: "Ansicht", en: "View" },
+  layerArabic: { tr: "Arapça", de: "Arabisch", en: "Arabic" },
+  layerTranslit: { tr: "Okunuş", de: "Umschrift", en: "Transliteration" },
+  layerTranslation: { tr: "Meal", de: "Übersetzung", en: "Translation" },
+  layerOnly: { tr: "sadece", de: "nur", en: "only" },
+  layerAll: { tr: "Hepsini göster", de: "Alle anzeigen", en: "Show all" },
+  viewFilterHint: {
+    tr: "En az bir katman açık kalır.",
+    de: "Mindestens eine Ebene bleibt sichtbar.",
+    en: "At least one layer stays visible.",
+  },
+
+  // Qibla
+  qiblaTitle: { tr: "Kıble Bulucu", de: "Kibla-Finder", en: "Qibla Finder" },
+  qiblaDirection: { tr: "Kıble yönü", de: "Kibla-Richtung", en: "Qibla direction" },
+  qiblaFromNorth: { tr: "kuzeyden saat yönünde", de: "von Norden im Uhrzeigersinn", en: "clockwise from north" },
+  qiblaDistance: { tr: "Kâbe'ye uzaklık", de: "Entfernung zur Kaaba", en: "Distance to the Kaaba" },
+  qiblaAligned: { tr: "Kıbleye yöneldiniz", de: "Sie sind zur Kibla ausgerichtet", en: "You are facing the Qibla" },
+  qiblaTurnRight: { tr: "Sağa dönün", de: "Nach rechts drehen", en: "Turn right" },
+  qiblaTurnLeft: { tr: "Sola dönün", de: "Nach links drehen", en: "Turn left" },
+  qiblaStartCompass: { tr: "Pusulayı başlat", de: "Kompass starten", en: "Start compass" },
+  qiblaNoCompass: {
+    tr: "Bu cihazda pusula sensörü yok. Kıble açısını kuzeye göre kullanın.",
+    de: "Kein Kompass-Sensor verfügbar. Nutzen Sie den Winkel zur Nordrichtung.",
+    en: "No compass sensor available. Use the angle relative to north.",
+  },
+  qiblaCompassDenied: {
+    tr: "Pusula izni verilmedi.",
+    de: "Zugriff auf den Kompass wurde verweigert.",
+    en: "Compass access was denied.",
+  },
+  qiblaCalibrate: {
+    tr: "Doğruluk için telefonu düz tutun ve havada 8 çizerek kalibre edin. Metal ve mıknatıslardan uzak durun.",
+    de: "Halten Sie das Handy flach und kalibrieren Sie es mit einer Acht-Bewegung. Abstand zu Metall und Magneten halten.",
+    en: "Hold the phone flat and calibrate by moving it in a figure eight. Keep away from metal and magnets.",
+  },
+  qiblaNoLocation: {
+    tr: "Kıble yönü için konum gerekli.",
+    de: "Für die Kibla-Richtung wird ein Standort benötigt.",
+    en: "A location is needed for the Qibla direction.",
+  },
+  qiblaFor: { tr: "Konum", de: "Standort", en: "Location" },
   autoScroll: { tr: "Okunan ayete kaydır", de: "Automatisch scrollen", en: "Auto-scroll to ayah" },
 
   // Tracker

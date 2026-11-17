@@ -1,11 +1,12 @@
-/* Nur service worker: offline app shell, cached static assets, cached API data. */
-const VERSION = "v1";
+/* Rıhlemedar service worker: offline app shell, cached static assets, cached API data. */
+const VERSION = "v3";
 const SHELL_CACHE = `nur-shell-${VERSION}`;
 const STATIC_CACHE = `nur-static-${VERSION}`;
 const API_CACHE = "nur-api-v1"; // shared with lib/api.ts
-const AUDIO_CACHE = `nur-audio-${VERSION}`;
+// v2: audio is now fetched with CORS for gapless Web Audio playback; drop old opaque entries.
+const AUDIO_CACHE = "nur-audio-v2";
 
-const SHELL_ROUTES = ["/", "/quran", "/quran/read", "/tracker", "/calendar"];
+const SHELL_ROUTES = ["/", "/quran", "/quran/read", "/tracker", "/calendar", "/qibla"];
 const SHELL_ASSETS = [
   "/manifest.json",
   "/icons/icon.svg",
@@ -52,7 +53,8 @@ async function networkFirst(request, cacheName, fallbackUrl) {
 async function cacheFirst(request, cacheName) {
   const cache = await caches.open(cacheName);
   const hit = await cache.match(request);
-  if (hit) return hit;
+  // An opaque (no-cors) entry cannot satisfy a CORS request such as fetch() for Web Audio.
+  if (hit && !(hit.type === "opaque" && request.mode === "cors")) return hit;
   const response = await fetch(request);
   if (response.ok || response.type === "opaque") cache.put(request, response.clone());
   return response;
